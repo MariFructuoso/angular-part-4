@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   standalone: true,
   templateUrl: './login-page.html',
   host: {
-    class: 'grow flex items-center justify-center', //centra el login
+    class: 'grow flex items-center justify-center', 
   },
 })
 export class LoginPage {
