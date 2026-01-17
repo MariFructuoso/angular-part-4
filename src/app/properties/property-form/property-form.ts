@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PropertyInsert } from '../interfaces/property';
-import { EncodeBase64Directive } from '../directives/encode-base64-directive';
-import { PropertiesService } from '../service/properties-service';
-import { ProvincesService } from '../service/provinces-service';
+import { PropertyInsert } from '../../interfaces/property';
+import { EncodeBase64Directive } from '../../shared/directives/encode-base64-directive';
+import { PropertiesService } from '../../service/properties-service';
+import { ProvincesService } from '../../service/provinces-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,6 +30,7 @@ export class PropertyForm {
   townsResource = this.#provincesService.getTownsResource(this.provinceId);
 
   constructor() {
+    this.resetForm();
     effect(() => {
       this.provinceId();
       this.newProperty.townId = 0;
@@ -39,6 +40,12 @@ export class PropertyForm {
 
   addProperty() {
     this.newProperty.mainPhoto = this.imagePreview();
+    
+    this.newProperty.townId = +this.newProperty.townId;
+    this.newProperty.price = +this.newProperty.price;
+    this.newProperty.numRooms = +this.newProperty.numRooms;
+    this.newProperty.numBaths = +this.newProperty.numBaths;
+    this.newProperty.sqmeters = +this.newProperty.sqmeters;
     
     this.#propertiesService.addProperty(this.newProperty).subscribe((newProperty) => {
       this.saved = true; 

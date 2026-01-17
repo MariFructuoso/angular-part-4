@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TopMenu } from './top-menu/top-menu';
+import { TopMenu } from './shared/top-menu/top-menu';
 
 
 @Component({

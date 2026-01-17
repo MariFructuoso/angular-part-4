@@ -1,0 +1,8 @@
+<div class="container mx-auto p-4">
+  @if (property()) {
+    <property-card 
+      [property]="property()!" 
+      (deleted)="goBack()">
+    </property-card>
+  }
+</div>

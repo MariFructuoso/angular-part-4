@@ -2,6 +2,7 @@ import { Directive, ElementRef, inject, output } from '@angular/core';
 
 @Directive({
   selector: 'input[type=file][encodeBase64]',
+  standalone: true,
   host: {
     '(change)': 'encodeFile()'
   },

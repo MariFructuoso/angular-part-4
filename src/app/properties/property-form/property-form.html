@@ -122,23 +122,21 @@
       </div>
       <div>
         <label for="mainPhoto" class="block text-gray-700 font-bold mb-2">Main Photo</label>
+        
         <input
           type="file"
           id="mainPhoto"
           name="mainPhoto"
           accept="image/*"
           required
-          [(ngModel)]="filename"
-          #fileImage
           encodeBase64
-          (encoded)="newProperty.mainPhoto = $event"
+          (encoded)="imagePreview.set($event)"
           class="w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
         />
-        <!-- Contenedor para la previsualización de la imagen -->
         <div class="mt-4">
-          @if(newProperty.mainPhoto) {
+          @if(imagePreview()) {
           <img
-            [src]="newProperty.mainPhoto"
+            [src]="imagePreview()"
             alt="Image preview"
             class="w-full h-48 object-cover rounded-lg"
           />

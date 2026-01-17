@@ -1,7 +1,7 @@
 import { HttpClient, httpResource } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { PropertiesResponse, Property, PropertyInsert, SinglePropertyResponse } from '../interfaces/property';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +17,22 @@ export class PropertiesService {
   addProperty(property: PropertyInsert): Observable<Property> {
     return this.#http
       .post<SinglePropertyResponse>(this.#propertiesUrl, property)
-      .pipe(map((res) => res.property));
+      .pipe(
+        map((res) => res.property),
+        tap(() => this.propertiesResource.reload()) 
+      );
   }
 
   deleteProperty(id: number): Observable<void> {
-    return this.#http.delete<void>(`${this.#propertiesUrl}/${id}`);
+    return this.#http.delete<void>(`${this.#propertiesUrl}/${id}`).pipe(
+      tap(() => this.propertiesResource.reload())
+    );
   }
 
-  getProperty(id: number): Observable<Property> {
-    return this.#http
-      .get<SinglePropertyResponse>(`${this.#propertiesUrl}/${id}`)
-      .pipe(map((res) => res.property));
+  getPropertyResource(id: Signal<number>) {
+    return httpResource<SinglePropertyResponse>(() => {
+      if (id() < 1) return undefined;
+      return `${this.#propertiesUrl}/${id()}`;
+    });
   }
 }
