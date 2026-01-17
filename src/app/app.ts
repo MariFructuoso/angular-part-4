@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { PropertiesPage } from "./properties-page/properties-page";
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TopMenu } from './top-menu/top-menu';
+
 
 @Component({
   selector: 'app-root',
-  imports: [PropertiesPage],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, TopMenu],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: '../styles.css'
 })
-export class App {
-  protected readonly title = signal('angular-inmosanvi');
-}
+export class App {}
